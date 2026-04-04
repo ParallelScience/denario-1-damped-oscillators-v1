@@ -1,0 +1,39 @@
+{
+    "sub_tasks": [
+        {
+            "bullet_points": [
+                "Load the dataset and group by oscillator_id.",
+                "Generate and save a \"Ground Truth\" reference file containing the true b and k values for each oscillator to serve as a consistent baseline.",
+                "Perform a baseline validation on noise-free data to confirm the numerical derivative method (Savitzky-Golay + central differences) recovers parameters accurately.",
+                "Implement the noise injection and downsampling pipeline for 6 SNR levels and 5 temporal resolutions.",
+                "Execute the numerical derivative estimation pipeline across all oscillators and conditions using parallel processing.",
+                "Save the resulting parameter estimates and MAPE metrics to a structured file."
+            ],
+            "sub_task": "Data preparation, ground truth generation, and numerical derivative estimation pipeline.",
+            "sub_task_agent": "engineer"
+        },
+        {
+            "bullet_points": [
+                "Implement a Dual Kalman Filter to estimate [x, v, k, b]^T as an online state-space problem.",
+                "Run the filter on the same grid of SNR levels and temporal resolutions as the numerical derivative method.",
+                "Aggregate the results and calculate MAPE for b and k across all 20 oscillators.",
+                "Save the intermediate performance metrics (MAPE values) as a structured data file (e.g., .npy or .csv) for researcher access.",
+                "Generate a summary plot comparing the robustness of the Dual Kalman Filter versus the numerical derivative method, including error bars/confidence intervals representing the variance across the 20 oscillators.",
+                "Save the final performance matrix and the comparison plot."
+            ],
+            "sub_task": "Dual Kalman Filter implementation, performance benchmarking, and visualization.",
+            "sub_task_agent": "engineer"
+        },
+        {
+            "bullet_points": [
+                "Interpret the performance matrix and plots generated in previous steps.",
+                "Define the observability threshold (MAPE > 5%) for both methods.",
+                "Explicitly compare the computational efficiency (execution time) of the Dual Kalman Filter versus the numerical derivative method.",
+                "Discuss the statistical boundaries where Gaussian noise and temporal sparsity render damping characteristics unrecoverable.",
+                "Write the full Results section of the report, synthesizing the findings into a coherent scientific narrative."
+            ],
+            "sub_task": "Analysis, reporting of observability thresholds, and computational efficiency comparison.",
+            "sub_task_agent": "researcher"
+        }
+    ]
+}
