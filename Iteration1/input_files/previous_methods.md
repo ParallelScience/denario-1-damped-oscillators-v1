@@ -1,0 +1,15 @@
+1. **Data Preparation and Baseline Validation**: Load the structured array and group by `oscillator_id`. Retain raw physical units for $x$ and $v$ to preserve the physical relationship between displacement and velocity. Perform a baseline validation run on the noise-free data to confirm that both the Kalman Filter and numerical derivative methods yield near-zero error, ensuring no inherent algorithmic bias exists before noise injection.
+
+2. **Synthetic Noise and Temporal Degradation**: Define a grid of 6 SNR levels (e.g., 5 dB to 40 dB) and 5 temporal resolutions (500, 250, 100, 50, 25 steps). Implement a function to inject Gaussian white noise into $x$ and $v$ fields. Ensure the downsampling pipeline maintains the original time interval start and end points to keep the physics consistent.
+
+3. **Numerical Derivative Estimation Pipeline**: For each resolution, apply a Savitzky-Golay filter to the noisy $x(t)$ and $v(t)$ data. Dynamically adjust the filter window size proportional to the current temporal resolution to prevent over-smoothing. Use the filtered data to approximate $\ddot{x}(t)$ via central differences. Solve for $b$ and $k$ using linear least-squares regression on the equation $\ddot{x} = -(b/m)\dot{x} - (k/m)x$, which is computationally efficient and avoids non-linear optimization.
+
+4. **Dual Kalman Filter Implementation**: Implement a Dual Kalman Filter where the state vector is augmented to include the parameters $[x, v, k, b]^T$. The filter will estimate the state and parameters simultaneously. Initialize the filter with reasonable priors (e.g., based on the range of the dataset) rather than ground-truth values. This approach treats parameter identification as an online estimation problem.
+
+5. **Parallelized Execution Workflow**: Utilize `multiprocessing.Pool` to distribute the parameter extraction tasks across the 4 available CPU cores. Each process will handle a subset of the 20 oscillators across the defined grid of SNR levels and temporal resolutions. This "embarrassingly parallel" structure ensures the total computation remains well within the 2-minute limit.
+
+6. **Error Quantification and Threshold Mapping**: For every combination of SNR and resolution, calculate the Mean Absolute Percentage Error (MAPE) between the estimated $b, k$ and the ground-truth values. Define the "observability threshold" as the boundary where MAPE exceeds 5%.
+
+7. **Performance Benchmarking and Analysis**: Aggregate the results into a performance matrix. Compare the robustness of the Dual Kalman Filter against the numerical derivative method by evaluating the stability of parameter estimates and total execution time. 
+
+8. **Reporting**: Generate a summary of the observability thresholds, mapping the statistical boundaries where Gaussian noise and temporal sparsity render the damping characteristics unrecoverable.
