@@ -1,0 +1,28 @@
+LaTeX Compilation Errors Found:
+
+! Unable to load picture or PDF file '../input_files/plots/mape_vs_snr.pdf'.
+<to be read again>
+}
+l.20 ...dth]{../input_files/plots/mape_vs_snr.pdf}
+
+?
+
+! Package graphics Error: Division by 0.
+
+See the graphics package documentation for explanation.
+Type  H <return>  for immediate help.
+...
+
+l.20 ...dth]{../input_files/plots/mape_vs_snr.pdf}
+
+?
+
+! Emergency stop.
+...
+
+l.20 ...dth]{../input_files/plots/mape_vs_snr.pdf}
+
+No pages of output.
+Transcript written on Results.log.
+---- STDERR ----
+

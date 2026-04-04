@@ -1,0 +1,20 @@
+\documentclass[]{article}
+
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{graphicx} 
+
+
+\begin{document}
+
+The accurate identification of physical parameters from observational data is a cornerstone of quantitative analysis across science and engineering. From characterizing the structural health of civil infrastructure to modeling intracellular transport, the ability to infer the intrinsic properties of a system is essential for prediction, control, and fundamental understanding. A canonical model for a wide range of oscillatory phenomena is the underdamped harmonic oscillator, whose dynamics are governed by its stiffness and damping coefficients. These parameters dictate the system's natural frequency and the rate at which energy dissipates, making their accurate estimation a critical task.
+
+A significant practical challenge arises when these parameters must be inferred from time-series measurements of position and velocity that are inevitably corrupted by noise, particularly when direct acceleration data is unavailable. The governing second-order differential equation of motion, $m\ddot{x}(t) + b\dot{x}(t) + kx(t) = F(t)$, cannot be directly solved for the parameters without knowledge of the acceleration term, $\ddot{x}(t)$. Estimating this term by numerically differentiating noisy velocity data is an inherently unstable process that amplifies high-frequency measurement error. This sensitivity poses a fundamental question: at what point does noise overwhelm the underlying physical signal, rendering the estimated parameters unreliable? Without a quantitative answer, researchers risk placing false confidence in models derived from data of insufficient quality.
+
+This study addresses this gap by establishing the quantitative observability thresholds for parameter estimation in stochastic underdamped systems. We move beyond the qualitative understanding that noise degrades accuracy to define the minimum Signal-to-Noise Ratio (SNR) and temporal resolution required to estimate the spring constant ($k$) and damping coefficient ($b$) within a predefined error tolerance. By mapping these performance boundaries, we provide a rigorous framework for assessing whether a given dataset possesses the fidelity needed to resolve its underlying physical characteristics. This work aims to equip researchers with a practical diagnostic tool to determine the feasibility of system identification before committing to complex modeling efforts.
+
+To define these limits, we systematically compare two distinct estimation methodologies using simulated data. The first is a computationally efficient approach based on numerical differentiation to approximate acceleration, followed by linear least-squares regression to solve for the system parameters. The second is a state-space method employing a Dual Kalman Filter, which is explicitly designed to handle stochasticity by simultaneously estimating the system's state and its parameters. By evaluating these methods across a broad spectrum of noise levels and sampling rates, we chart the performance landscape for each. This investigation provides a quantitative guide to the minimum data requirements for system identification and empirically demonstrates that stiffness is a more readily observable parameter than damping in noisy dynamical systems.
+
+\end{document}
+                

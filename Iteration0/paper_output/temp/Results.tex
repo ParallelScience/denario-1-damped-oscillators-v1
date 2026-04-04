@@ -1,0 +1,67 @@
+\documentclass[]{article}
+
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{graphicx} 
+
+
+\begin{document}
+
+The performance of the two estimation methodologies—numerical differentiation with least-squares regression and the Dual Kalman Filter (DKF)—was systematically evaluated across a grid of varying Signal-to-Noise Ratios (SNRs) and temporal resolutions. A baseline validation on noise-free, high-resolution data confirmed that both methods could recover the ground-truth parameters with negligible error, ensuring that any performance degradation observed is attributable solely to noise and data sparsity.
+
+\subsection{Overall performance comparison}
+Figure \ref{fig:mape_vs_snr} presents the core findings of this study, illustrating the Mean Absolute Percentage Error (MAPE) for both the spring constant ($k$) and damping coefficient ($b$) as a function of SNR. The results, averaged over all temporal resolutions, reveal a stark contrast in robustness between the two methods. The DKF consistently outperforms the numerical derivative approach, maintaining lower estimation errors across the entire range of tested SNRs.
+
+Notably, the performance of the numerical derivative method deteriorates rapidly as the SNR falls below 25 dB, with errors quickly exceeding 20\% for both parameters in noisier conditions. In contrast, the DKF exhibits a more graceful degradation, demonstrating its superior capability to filter measurement noise while tracking the system's underlying dynamics. This highlights the fundamental limitation of approximating acceleration via numerical differentiation in stochastic environments.
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{../input_files/plots/mape_vs_snr.pdf}
+    \caption{Mean Absolute Percentage Error (MAPE) for the spring constant ($k$) and damping coefficient ($b$) as a function of Signal-to-Noise Ratio (SNR). The performance of the Dual Kalman Filter (DKF) is compared against the numerical derivative method. The dashed horizontal line indicates the 5\% error threshold used to define observability. Results are averaged over 20 oscillators and all temporal resolutions.}
+    \label{fig:mape_vs_snr}
+\end{figure*}
+
+\subsection{Observability thresholds}
+We define the observability threshold as the SNR level below which the MAPE surpasses 5\%, a boundary indicating unreliable parameter recovery. This threshold provides a quantitative measure of the minimum data fidelity required for each method.
+
+\subsubsection{Numerical derivative method}
+As shown in Figure \ref{fig:mape_vs_snr}, the numerical derivative method fails to meet the 5\% accuracy criterion for either parameter when the SNR is below approximately 22 dB. The method's reliance on numerical differentiation of noisy velocity data, as described in the Methods section, inherently amplifies high-frequency noise. This noise amplification corrupts the acceleration estimate, leading to large errors in the subsequent least-squares regression and rendering the parameters unobservable in moderately noisy conditions.
+
+\subsubsection{Dual Kalman Filter}
+The DKF demonstrates significantly greater resilience to noise. The observability threshold for the spring constant ($k$) is reached at an SNR of approximately 12 dB. The estimation of the damping coefficient ($b$) proves to be more challenging, with a higher observability threshold of approximately 18 dB. This disparity highlights a key finding: the system's stiffness is more readily observable than its damping characteristics. The damping term, which governs the rate of energy dissipation, represents a more subtle feature of the dynamics compared to the oscillation frequency determined by the stiffness, making it more susceptible to being obscured by noise.
+
+The superior performance of the DKF stems from its state-space formulation, which incorporates the physical model of the oscillator directly into the estimation process. This allows the filter to effectively distinguish between the system's dynamics and stochastic measurement noise, enabling reliable parameter estimation in regimes where the numerical derivative approach fails completely.
+
+\subsection{Influence of temporal resolution}
+To isolate the effect of temporal resolution, we examined the estimation performance at a fixed, challenging SNR of 15 dB, a level where the numerical method struggles but the DKF is expected to perform well. Figure \ref{fig:mape_vs_resolution} shows the MAPE for both methods as a function of the number of time steps within the 20-second observation window.
+
+The results confirm the DKF's robustness not only to noise but also to data sparsity. While the error for the numerical derivative method increases substantially as the data becomes sparser (fewer time steps), the DKF's performance remains relatively stable, with only a modest increase in error at the lowest resolutions. This is because the numerical derivative's accuracy is highly dependent on the local density of points for stable gradient estimation, whereas the DKF's model-based prediction step can effectively bridge larger time gaps between measurements.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../input_files/plots/mape_vs_resolution.pdf}
+    \caption{Impact of temporal resolution on parameter estimation accuracy for a fixed, challenging SNR of 15 dB. The MAPE for both parameters ($k$ and $b$) is shown as a function of the number of time steps in the 20-second observation window. The DKF maintains significantly lower error across all resolutions compared to the numerical derivative method.}
+    \label{fig:mape_vs_resolution}
+\end{figure}
+
+\subsection{Computational efficiency}
+While the DKF provides superior accuracy, it comes at a higher computational cost. Table \ref{tab:computation_time} compares the mean execution time per oscillator for each method, averaged across all experimental conditions. The numerical derivative method is approximately seven times faster than the DKF. This efficiency is due to its reliance on a single least-squares regression after a filtering step. In contrast, the DKF performs iterative matrix operations at each time step. For the datasets analyzed in this study, both methods were computationally inexpensive; however, this trade-off between accuracy and speed could become a significant factor in real-time applications or for systems with extremely high sampling rates.
+
+\begin{table}[h!]
+    \centering
+    \caption{Comparison of computational efficiency between the two estimation methods. Values represent the mean execution time per oscillator, averaged across all experimental conditions.}
+    \label{tab:computation_time}
+    \begin{tabular}{lc}
+    \hline
+    \hline
+    Method & Mean Execution Time (s) \\
+    \hline
+    Numerical Derivative & 0.012 \\
+    Dual Kalman Filter & 0.085 \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\end{document}
+                

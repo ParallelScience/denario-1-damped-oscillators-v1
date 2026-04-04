@@ -1,0 +1,7 @@
+{
+  "image0": {
+    "key": "image0",
+    "name": "step_2_comparison_plot_1_1775305459.png",
+    "caption": "Comparison of the Mean Absolute Percentage Error (MAPE) for the Dual Kalman Filter (DKF) and the numerical derivative method as a function of Signal-to-Noise Ratio (SNR). The plot illustrates the superior robustness of the DKF in noisy conditions. While the numerical derivative method's error exceeds the 5\\% observability threshold for SNR levels below 20 dB, the DKF maintains estimation accuracy for the spring constant ($k$) down to approximately 10 dB, demonstrating its effectiveness for parameter recovery in low-SNR regimes."
+  }
+}
