@@ -1,0 +1,8 @@
+{
+  "primary_category": "eess.SY",
+  "secondary_categories": [
+    "eess.SP",
+    "math.OC"
+  ],
+  "justification": "The paper focuses on system identification, parameter estimation for dynamical systems (underdamped oscillators), and state-space modeling using Kalman Filters, which are core topics in Systems and Control (eess.SY). The analysis of signal-to-noise ratios and filtering techniques also strongly aligns with Signal Processing (eess.SP) and Optimization and Control (math.OC)."
+}

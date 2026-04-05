@@ -1,0 +1,7 @@
+Classifier: Step 1 — Determining archive...
+  Archive: eess — The paper focuses on system identification, parameter estimation, and signal processing techniques like the Dual Kalman Filter for stochastic oscillators, which falls squarely under the scope of systems and control engineering.
+Classifier: Step 2 — Determining subcategory within 'eess'...
+  Primary: eess.SY
+  Secondary: eess.SP, math.OC
+  Justification: The paper focuses on system identification, parameter estimation for dynamical systems (underdamped oscillators), and state-space modeling using Kalman Filters, which are core topics in Systems and Control (eess.SY). The analysis of signal-to-noise ratios and filtering techniques also strongly aligns with Signal Processing (eess.SP) and Optimization and Control (math.OC).
+Classification completed in 0 min 2 sec. Cost: $0.0000
